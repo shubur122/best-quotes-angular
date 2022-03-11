@@ -9,6 +9,7 @@ import { Quotation } from '../models/quotation';
 export class FormComponent {
   @Output() newQuotation = new EventEmitter<Quotation>();
   showForm = false;
+  isDisabled = true;
   quotation: Quotation = {
     author: '',
     sentence: '',
@@ -17,7 +18,12 @@ export class FormComponent {
   switchForm() {
     this.showForm = !this.showForm
   }
+  checkForm() {
+    if (this.quotation.sentence && this.quotation.author) return false;
+    else return true;
+  }
   addQuotation() {
+    if (this.checkForm()) return
     this.newQuotation.emit(this.quotation);
     this.quotation = {
       author: '',
